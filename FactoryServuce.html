@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js'></script>
+
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+<input ng-model="input1">
+<input ng-model="input2">
+<button ng-click="doAddition()">Sum</button>
+<button ng-click="doSubtraction()">Subtraction</button>
+<p>{{output}}</p>
+</body>
+<script>
+    var app =angular.module("myApp",[]);
+    app.controller("myCtrl",function ($scope,calFactory,calService) {
+        $scope.doAddition = function () {
+           $scope.output =  calFactory.doSum($scope.input1,$scope.input2);
+        }
+        $scope.doSubtraction = function () {
+            $scope.output = calService.doSub($scope.input1,$scope.input2);
+        }
+
+    });
+
+    app.factory("calFactory",function () {
+        var doCalculation={};
+        doCalculation.doSum = function (int1,int2) {
+           return parseInt(int1)+parseInt(int2);
+       }
+       return doCalculation;
+    });
+    app.service("calService",function () {
+        this.doSub = function (int1,int2) {
+            return parseInt(int1)-parseInt(int2);
+        }
+    })
+    app.provider
+</script>
+</html>

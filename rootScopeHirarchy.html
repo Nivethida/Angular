@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js'></script>
+
+</head>
+<body ng-app="myApp">
+<div ng-controller="emp">
+<p>The name is: {{name}}</p>
+    <p>{{printTax}}</p>
+    <div ng-controller="empDetails">
+        <p>Name: {{name}}, Salary: {{salary}}, Dept: {{dept}}</p>
+        <div ng-controller="empPayCheck">
+            Taxes: {{getTaxes()}}
+            Net: {{getNet()}}
+        </div>
+    </div>
+</div>
+<div ng-controller="sib1">
+    <p>{{age}}</p>
+</div>
+<div ng-controller="sib2">
+    <p>{{}}</p>
+    <p>{{}}</p>
+</div>
+</body>
+<script>
+    var app = angular.module("myApp",[]).run(function ($rootScope) {
+        $rootScope.TaxPercent = 30;
+    });
+    app.controller("emp",function ($scope,$rootScope) {
+        $scope.name= "jack";
+    });
+    app.controller("empDetails",function ($scope,$rootScope) {
+        $scope.salary=1200;
+        $scope.dept="sales";
+    });
+    app.controller("empPayCheck",function ($scope,$rootScope) {
+        $scope.getTaxes = function () {
+            return $scope.salary * $rootScope.TaxPercent/100;
+        };
+        $scope.getNet = function () {
+            return $scope.salary - $scope.getTaxes();
+        };
+    });
+    app.controller("sib1",function ($scope,$rootScope) {
+       $scope.age = 12;
+    });
+    app.controller("sib2",function ($scope,$rootScope) {
+        $scope.class = "2nd";
+        $rootScope.TaxPercent =40;
+    })
+</script>
+</html>

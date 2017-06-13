@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js'></script>
+
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+<input ng-model="o.a">
+<input ng-model="o.b">
+<p>c = {{o.c}}</p>
+<script>
+    var app = angular.module("myApp",[]);
+    app.controller("myCtrl",function ($scope) {
+        $scope.o = {
+            a: 1,
+            b: 5,
+            c: 6
+        }
+        $scope.$watchGroup(["o.a","o.b"],function (newVal, oldVal) {
+            if(newVal != oldVal){
+                $scope.o.c = $scope.o.a * $scope.o.b;
+            }
+        });
+
+    });
+
+</script>
+</body>
+</html>

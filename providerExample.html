@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js'></script>
+
+</head>
+<body>
+<div ng-app="myApp" ng-controller="myCtrl">
+<p>{{name}}</p>
+    <p>{{details()}}</p>
+</div>
+<script>
+    var app = angular.module("myApp",[]);
+    app.provider("myProvider",function(){
+        this.$get = function () {
+            return "my value";
+        }
+    });
+    app.controller("myCtrl",function ($scope,myProvider) {
+        $scope.name="Nivi";
+        $scope.details = function () {
+            return myProvider+ " "+$scope.name;
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+</head>
+<body ng-app="">
+<script>
+    var mySource = {'name' : 'sakshi', 'age' : '24', 'obj' :{'key':'value'}}
+    var myDest = {}
+    angular.copy(mySource, myDest);
+    console.log(myDest);
+    console.log(mySource.obj === myDest.obj);
+
+    var mySource1 = {'name' : 'neha', 'age' : '26', obj2 : {}}
+    var mySource2 = {'course' : 'MCA'}
+    var myDest2 = {}
+    angular.extend(myDest2, mySource1,mySource2);
+    console.log(myDest2);
+    console.log(mySource1.obj2 === myDest2.obj2);
+</script>
+</body>
+</html>

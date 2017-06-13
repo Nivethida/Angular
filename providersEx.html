@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js'></script>
+
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+<p><span>{{pre}}</span>{{name}}</p>
+<script>
+    var app = angular.module("myApp",[]);
+    app.controller("myCtrl",function ($scope,title) {
+        $scope.name = "Peter";
+        $scope.pre = title.titleName;
+
+    })
+    app.provider("title",function () {
+        var type;
+        return{
+            setFirstName: function (value) {
+                type = value;
+            },
+            $get: function () {
+                return{
+                    titleName: type + "John"
+                }
+            }
+        }
+    })
+    app.config(function (titleProvider) {
+        titleProvider.setFirstName("Mr.");
+    })
+</script>
+</body>
+</html>
