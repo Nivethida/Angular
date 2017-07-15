@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js'></script>
-
+    <script src="AjaxCalls.js"></script>
 </head>
 <body ng-app="myApp" ng-controller="myCtrl">
 <input ng-model="input1">
@@ -17,18 +17,33 @@
     var app =angular.module("myApp",[]);
     app.controller("myCtrl",function ($scope,calFactory,calService) {
         $scope.doAddition = function () {
-           $scope.output =  calFactory.doSum($scope.input1,$scope.input2);
-        }
+            calFactory.doSum($scope.input1,$scope.input2,function (result) {
+                $scope.output = result;
+            });
+        };
         $scope.doSubtraction = function () {
             $scope.output = calService.doSub($scope.input1,$scope.input2);
         }
 
     });
 
-    app.factory("calFactory",function () {
+    app.factory("calFactory",function ($http,$log) {
+        $log.log("instance is made from factory")
         var doCalculation={};
-        doCalculation.doSum = function (int1,int2) {
-           return parseInt(int1)+parseInt(int2);
+        //doCalculation.doSum = function (int1,int2,callbackFunction) {
+          //  callbackFunction(parseInt(int1)+parseInt(int2));
+       //}
+       //return doCalculation;
+       doCalculation.doSum = function (int1,int2,callbackFunction) {
+           $http({
+             url:'http://localhost:4407/Sum?a='+ int1 +'&b=' +int2,
+               method: 'GET'
+           }).then(function (res) {
+               $log.log(res.data);
+               callbackFunction(res.data);
+           },function (res) {
+               $log.error("Error occured");
+           });
        }
        return doCalculation;
     });
